@@ -21,4 +21,5 @@ if params.train_transfer_model:
                                           epochs=params.epochs)
 transfer_model1 = dog_breed_vgg16.get_transfer_model()
 transfer_model1 = dog_breed_vgg16.load_transfer_model(model_path, transfer_model1)
-dog_breed_vgg16.test(test_loader, transfer_model1, criterion_transfer, device)
+if transfer_model1 is not None:
+    dog_breed_vgg16.test(test_loader, transfer_model1, criterion_transfer, device)

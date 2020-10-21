@@ -58,11 +58,11 @@ def load_data_vgg(train_dir, test_dir, val_dir, batch_size=20, error_check=0, in
     if error_check:
         print_error_check(train_data, test_data, val_data)
 
-    train = DataLoader(train_data, batch_size=batch_size, shuffle=True,
-                       num_workers=num_workers)
-    test = DataLoader(test_data, batch_size=batch_size, num_workers=num_workers)
-    val = DataLoader(val_data, batch_size=batch_size, num_workers=num_workers)
-    return train, test, val
+    train_data = DataLoader(train_data, batch_size=batch_size, shuffle=True,
+                            num_workers=num_workers)
+    test_data = DataLoader(test_data, batch_size=batch_size, num_workers=num_workers)
+    val_data = DataLoader(val_data, batch_size=batch_size, num_workers=num_workers)
+    return train_data, test_data, val_data
 
 
 def get_transfer_model():
@@ -150,7 +150,7 @@ def train_network_vgg(train_data_loader, val_data_loader, model, device, criteri
             val_loss /= len(val_data_loader)
             val_accuracy /= len(val_data_loader)
             print('\nVal Accuracy%:  {} \tTraining Loss: {:.6f} \tValidation Loss: {:.6f}'
-                    .format(val_accuracy * 100, train_loss, val_loss))
+                  .format(val_accuracy * 100, train_loss, val_loss))
             training_loss.append(train_loss)
             validation_loss.append(val_loss)
             validation_accuracy.append(val_accuracy)
@@ -160,7 +160,7 @@ def train_network_vgg(train_data_loader, val_data_loader, model, device, criteri
                 save_model(model, x, val_loss, model_path)
     plt.plot(training_loss, label='Training Loss')
     plt.plot(validation_loss, label='Validation Loss')
-    plt.plot(validation_accuracy, label = 'Validation Accuracy')
+    plt.plot(validation_accuracy, label='Validation Accuracy')
     plt.legend(frameon=False)
 
     return training_loss, validation_loss, validation_accuracy
@@ -188,7 +188,11 @@ def load_transfer_model(path, model):
         :param path : PAth to load model
         :param model: The input sample model
         :returns model: The fully loaded module"""
-    model.load_state_dict(torch.load(path))
+    try:
+        model.load_state_dict(torch.load(path))
+    except OSError:
+        model = None
+        print("Error in loading the model")
     return model
 
 
