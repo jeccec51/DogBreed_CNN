@@ -1,0 +1,13 @@
+visualize = False
+train_nw = False
+batch = 20
+epochs = 100
+lr = 0.003
+momentum = 0.9
+kernel_size = 3
+stride = 1
+pool_size = 2
+padding_size = 1
+input_size = 256
+error_check = 0
+dropout_probability = 0.29

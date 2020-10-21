@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import ImageFile
 from path_names import model_path
+from parameters import kernel_size, pool_size, stride, padding_size, dropout_probability
 
 
 def print_error_check(train_data, test_data, val_data):
@@ -92,15 +93,15 @@ class DogBreedNet(nn.Module, ABC):
     def __init__(self):
         super(DogBreedNet, self).__init__()
         # Define Network Architecture
-        self.con_1_1 = nn.Conv2d(3, 16, 3, padding=1)
-        self.con_2_1 = nn.Conv2d(16, 32, 3, padding=1)
-        self.con_3_1 = nn.Conv2d(32, 64, 3, padding=1)
-        self.con_4_1 = nn.Conv2d(64, 128, 3, padding=1)
-        self.pool = nn.MaxPool2d(2, 2)
+        self.con_1_1 = nn.Conv2d(3, 16, kernel_size, padding=padding_size)
+        self.con_2_1 = nn.Conv2d(16, 32, kernel_size, padding=padding_size)
+        self.con_3_1 = nn.Conv2d(32, 64, kernel_size, padding=padding_size)
+        self.con_4_1 = nn.Conv2d(64, 128, kernel_size, padding=padding_size)
+        self.pool = nn.MaxPool2d(pool_size, pool_size)
         self.fc_1 = nn.Linear(128 * 32 * 32, 1024)
         self.fc_2 = nn.Linear(1024, 512)
         self.fc_3 = nn.Linear(512, 133)
-        self.dropout = nn.Dropout(0.29)
+        self.dropout = nn.Dropout(dropout_probability)
 
     def forward(self, x):
         """:param x  : Input image
@@ -122,7 +123,7 @@ def get_device():
     Function verifies if a GPU ia available.
     If available it returns a GPU, else it returns a CPU device
         :param: None
-        :returns GPU or CPU device
+        :returns GPU or CPU device, a flag designating the same
     """
     train_on_gpu = torch.cuda.is_available()
     use_gpu = False
@@ -235,7 +236,7 @@ def train_network(train_data_loader, val_data_loader, model, device, criterion, 
             if val_loss < val_loss_min:
                 x = val_loss_min
                 val_loss_min = val_loss
-                save_model(model, x, val_loss, model_path)
+                save_model(model, x, val_loss)
     plt.plot(training_loss, label='Training Loss')
     plt.plot(validation_loss, label='Validation Loss')
     plt.plot(validation_accuracy, label='Validation Accuracy')
