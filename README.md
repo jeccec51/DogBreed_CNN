@@ -5,7 +5,7 @@ I recommend downloading and using anaconda.
 To install latest Anaconda installer, refer to below link.
 https://docs.anaconda.com/anaconda/install/windows/
 Once anaconda is installed, I recommend creating a virtual environment. To do that run anaconda terminal from the main window. (The example is for windows users. In Linux, you can directly run conda from terminal)
- 
+ (See to docx file for figures and screen shots)
 Once the CMD is launched, create a new environment.
 conda create --name torchenv python=3.6
 This will create new virtual environment
@@ -14,7 +14,7 @@ I am attaching list of packages that need to be added to this environment. To in
 I Personally use pycharm, for python projects, as their memory management is efficient. You can use any slandered python editor. If you are using pycharm, I suggest changing the virtual environment to the one we created recently. 
 This can be done by File>Settings>Interpreter>Python Interpreter and then navigating to the newly created folder. Usually the environments are located at C:\Users\UserName\Anaconda3\envs\nameofnev\python.exe
 If every step is followed correctly the code will be loaded in Pycharm without any error. Refer the screen shot below for detailed steps
- 
+(See to docx version of readme for figures) 
 
 The dog breed classification data can be downloaded here
 https://www.kaggle.com/c/dog-breed-identification/data
