@@ -100,7 +100,7 @@ class DogBreedNet(nn.Module, ABC):
         self.pool = nn.MaxPool2d(pool_size, pool_size)
         self.fc_1 = nn.Linear(128 * 32 * 32, 1024)
         self.fc_2 = nn.Linear(1024, 512)
-        self.fc_3 = nn.Linear(512, 133)
+        self.fc_3 = nn.Linear(512, 120)
         self.dropout = nn.Dropout(dropout_probability)
 
     def forward(self, x):
